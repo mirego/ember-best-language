@@ -13,7 +13,7 @@ cache:
   yarn: true
 
 env:
-  # we recommend testing LTS’s and latest stable release (bonus points to beta/canary)
+  # We recommend testing LTS’s and latest stable release (bonus points to beta/canary)
   - EMBER_TRY_SCENARIO=ember-lts-2.4
   - EMBER_TRY_SCENARIO=ember-lts-2.8
   - EMBER_TRY_SCENARIO=ember-release
@@ -34,6 +34,7 @@ install:
   - yarn install --no-lockfile
 
 script:
-  # Usually, it's ok to finish the test scenario without reverting
-  # to the addon’s original dependency state, skipping "cleanup".
+  - yarn run lint
+  # Usually, it’s ok to finish the test scenario without reverting
+  # to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup

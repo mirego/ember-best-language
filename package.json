@@ -20,13 +20,13 @@
     "build": "ember build",
     "start": "ember server",
     "test": "ember try:each",
-    "lint": "eslint ."
+    "lint": "node_modules/.bin/eslint './addon/**/*.js' './app/**/*.js' './config/**/*.js' './public/**/*.js' './tests/**/*.js' './index.js' './ember-cli-build.js' './testem.js'"
   },
   "dependencies": {
-    "babel-eslint": "^7.2.3",
     "ember-cli-babel": "^6.4.1"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "broccoli-asset-rev": "^2.4.5",
     "ember-cli": "2.13.2",
     "ember-cli-chai": "^0.4.0",
