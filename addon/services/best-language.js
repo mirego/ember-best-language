@@ -55,7 +55,7 @@ export default Ember.Service.extend({
 
   _mapWithBaseLanguage(languages) {
     return languages.map((languageObject) => {
-      return Ember.assign({}, languageObject, {baseLanguage: languageObject.language.split('-')[0]});
+      return Object.assign({}, languageObject, {baseLanguage: languageObject.language.split('-')[0]});
     });
   },
 

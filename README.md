@@ -1,6 +1,6 @@
 # ember-best-language
 
-[![Build Status](https://travis-ci.com/mirego/ember-best-language.svg?token=3s1pLpoaE4oVXEEQWxnc&branch=master)](https://travis-ci.com/mirego/ember-best-language)
+[![Build Status](https://travis-ci.org/mirego/ember-best-language.svg?branch=master)](https://travis-ci.org/mirego/ember-best-language)
 
 An FastBoot-enabled addon to detect the best language for your user.
 
