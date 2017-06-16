@@ -1,5 +1,7 @@
 # ember-best-language
 
+[![Build Status](https://travis-ci.com/mirego/ember-best-language.svg?token=3s1pLpoaE4oVXEEQWxnc&branch=master)](https://travis-ci.com/mirego/ember-best-language)
+
 An FastBoot-enabled addon to detect the best language for your user.
 
 ## Installation
@@ -55,8 +57,8 @@ export default Ember.Route.extend({
 ## Contributing
 
 ```shell
-$ git clone https://github.com/mirego/ember-cli-pod-translations
-$ cd ember-cli-pod-translations
+$ git clone https://github.com/mirego/ember-best-language
+$ cd ember-best-language
 $ yarn install
 ```
 
