@@ -1,26 +1,79 @@
-# ember-accept-language
+# ember-best-language
 
-This README outlines the details of collaborating on this Ember addon.
+An FastBoot-enabled addon to detect the best language for your user.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-accept-language`
-* `npm install`
+```shell
+$ ember install ember-best-language
+```
 
-## Running
+## Usage
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+`ember-best-language` provides a service with two methods:
 
-## Running Tests
+- bestLanguage
+- bestLanguageOrFirst
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+To find out which language is the best one to use among a list of supported languages:
+
+```js
+import Ember from 'ember';
+
+const {inject} = Ember;
+
+export default Ember.Route.extend({
+  bestLanguage: inject.service('best-language'),
+
+  beforeModel() {
+    const bestLanguage = this.get('bestLanguage').bestLanguage(['en', 'fr']);
+    // => {language: 'en-US', baseLanguage: 'en', score: 1}
+  }
+});
+```
+
+If none of the user’s languages are supported, `ember-best-language` will return `null`. However, you can use the `bestLanguageOrFirst` method to make it return the first supported language in those cases.
+
+```js
+import Ember from 'ember';
+
+const {inject} = Ember;
+
+export default Ember.Route.extend({
+  bestLanguage: inject.service('best-language'),
+
+  beforeModel() {
+    const bestLanguage = this.get('bestLanguage').bestLanguage(['fr', 'de']);
+    // => null
+
+    const bestLanguageOrFirst = this.get('bestLanguage').bestLanguageOrFirst(['fr', 'de']);
+    // => {language: 'fr', baseLanguage: 'fr', score: 0}
+  }
+});
+```
+
+## Contributing
+
+```shell
+$ git clone https://github.com/mirego/ember-cli-pod-translations
+$ cd ember-cli-pod-translations
+$ yarn install
+```
+
+## Running tests
+
+```shell
+$ npm test # Runs `ember try:each` to test the addon against multiple Ember versions
+$ ember test
+$ ember test --server
+```
 
 ## Building
 
-* `ember build`
+```shell
+$ ember build
+```
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+This addon is inspired by the work of Rémi Prévost in https://github.com/remiprev/plug_best, you should check it out!
