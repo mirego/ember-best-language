@@ -28,9 +28,9 @@ export default Ember.Service.extend({
 
   _fetchBrowserLanguages() {
     const languages = []
+      .concat(navigator.languages)
       .concat(navigator.language)
-      .concat(navigator.userLanguage)
-      .concat(navigator.languages);
+      .concat(navigator.userLanguage);
 
     return Array.from(new Set(languages))
       .filter((language) => !!language)

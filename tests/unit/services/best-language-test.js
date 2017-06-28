@@ -87,113 +87,137 @@ describe('Unit | Service | best-language', () => {
       isFastboot: false
     });
 
-    before(() => {
-      Object.defineProperty(window.navigator, 'languages', {value: ['en-US', 'en', 'fr']});
-      Object.defineProperty(window.navigator, 'language', {value: 'en-US'});
-      Object.defineProperty(window.navigator, 'userLanguage', {value: undefined});
-    });
-
     beforeEach(function() {
       this.register('service:fastboot', fastbootStub);
       this.inject.service('fastboot');
     });
 
-    describe('_fetchBrowserLanguages', () => {
-      it('should fetch the languages from the different properties on `navigator`', function() {
-        const service = this.subject();
-
-        const expectedLanguages = [
-          {language: 'en-US', score: 1},
-          {language: 'en', score: 0.9},
-          {language: 'fr', score: 0.8}
-        ];
-
-        expect(service._fetchBrowserLanguages()).to.deep.equal(expectedLanguages);
-      });
-    });
-
-    describe('_computeScore', () => {
-      describe('with an array of less than 10 languages', () => {
-        const languagesLength = 3;
-
-        it('should return `1` for the first item', function() {
-          const service = this.subject();
-
-          expect(service._computeScore(0, languagesLength)).to.equal(1);
-        });
-
-        it('should compute a score, between 1 and 0, for each languages. Each having 0.1 difference.', function() {
-          const service = this.subject();
-
-          expect(service._computeScore(0, languagesLength)).to.equal(1);
-          expect(service._computeScore(1, languagesLength)).to.equal(0.9);
-          expect(service._computeScore(2, languagesLength)).to.equal(0.8);
-        });
+    describe('with different language and languages properties', () => {
+      before(() => {
+        Object.defineProperty(window.navigator, 'languages', {value: ['fr', 'en-US', 'en'], configurable: true});
+        Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
+        Object.defineProperty(window.navigator, 'userLanguage', {value: undefined, configurable: true});
       });
 
-      describe('with an array of more than 10 languages', () => {
-        const languagesLength = 15;
-
-        it('should return `1` for the first item', function() {
+      describe('_fetchBrowserLanguages', () => {
+        it('should prioritize the languages property from the different properties on `navigator`', function() {
           const service = this.subject();
 
-          expect(service._computeScore(0, languagesLength)).to.equal(1);
-        });
+          const expectedLanguages = [
+            {language: 'fr', score: 1},
+            {language: 'en-US', score: 0.9},
+            {language: 'en', score: 0.8}
+          ];
 
-        it('should compute a score, between 1 and 0, for each languages, with 2 digits precision', function() {
-          const service = this.subject();
-
-          expect(service._computeScore(0, languagesLength)).to.equal(1);
-          expect(service._computeScore(1, languagesLength)).to.equal(0.93);
-          expect(service._computeScore(2, languagesLength)).to.equal(0.87);
-          expect(service._computeScore(13, languagesLength)).to.equal(0.13);
-          expect(service._computeScore(14, languagesLength)).to.equal(0.07);
-          expect(service._computeScore(15, languagesLength)).to.equal(0);
+          expect(service._fetchBrowserLanguages()).to.deep.equal(expectedLanguages);
         });
       });
     });
 
-    describe('bestLanguage', () => {
-      it ('should return the best language when one matches', function() {
-        const service = this.subject();
-
-        const supportedLanguages = [
-          'en', 'es'
-        ];
-
-        expect(service.bestLanguage(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+    describe('with default language and languages properties', () => {
+      before(() => {
+        Object.defineProperty(window.navigator, 'languages', {value: ['en-US', 'en', 'fr'], configurable: true});
+        Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
+        Object.defineProperty(window.navigator, 'userLanguage', {value: undefined, configurable: true});
       });
 
-      it('should return `null` when none match', function() {
-        const service = this.subject();
+      describe('_fetchBrowserLanguages', () => {
+        it('should fetch the languages from the different properties on `navigator`', function() {
+          const service = this.subject();
 
-        const supportedLanguages = [
-          'de', 'es'
-        ];
+          const expectedLanguages = [
+            {language: 'en-US', score: 1},
+            {language: 'en', score: 0.9},
+            {language: 'fr', score: 0.8}
+          ];
 
-        expect(service.bestLanguage(supportedLanguages)).to.deep.equal(null);
-      });
-    });
-
-    describe('bestLanguageOrFirst', () => {
-      it ('should return the best language when one matches', function() {
-        const service = this.subject();
-
-        const supportedLanguages = [
-          'en', 'es'
-        ];
-
-        expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+          expect(service._fetchBrowserLanguages()).to.deep.equal(expectedLanguages);
+        });
       });
 
-      it('should return the first supported language when none match', function() {
-        const service = this.subject();
+      describe('_computeScore', () => {
+        describe('with an array of less than 10 languages', () => {
+          const languagesLength = 3;
 
-        const supportedLanguages = [
-          'de', 'es'
-        ];
+          it('should return `1` for the first item', function() {
+            const service = this.subject();
 
-        expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'de', baseLanguage: 'de', score: 0});
+            expect(service._computeScore(0, languagesLength)).to.equal(1);
+          });
+
+          it('should compute a score, between 1 and 0, for each languages. Each having 0.1 difference.', function() {
+            const service = this.subject();
+
+            expect(service._computeScore(0, languagesLength)).to.equal(1);
+            expect(service._computeScore(1, languagesLength)).to.equal(0.9);
+            expect(service._computeScore(2, languagesLength)).to.equal(0.8);
+          });
+        });
+
+        describe('with an array of more than 10 languages', () => {
+          const languagesLength = 15;
+
+          it('should return `1` for the first item', function() {
+            const service = this.subject();
+
+            expect(service._computeScore(0, languagesLength)).to.equal(1);
+          });
+
+          it('should compute a score, between 1 and 0, for each languages, with 2 digits precision', function() {
+            const service = this.subject();
+
+            expect(service._computeScore(0, languagesLength)).to.equal(1);
+            expect(service._computeScore(1, languagesLength)).to.equal(0.93);
+            expect(service._computeScore(2, languagesLength)).to.equal(0.87);
+            expect(service._computeScore(13, languagesLength)).to.equal(0.13);
+            expect(service._computeScore(14, languagesLength)).to.equal(0.07);
+            expect(service._computeScore(15, languagesLength)).to.equal(0);
+          });
+        });
+      });
+
+      describe('bestLanguage', () => {
+        it ('should return the best language when one matches', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'en', 'es'
+          ];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+        });
+
+        it('should return `null` when none match', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'de', 'es'
+          ];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal(null);
+        });
+      });
+
+      describe('bestLanguageOrFirst', () => {
+        it ('should return the best language when one matches', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'en', 'es'
+          ];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+        });
+
+        it('should return the first supported language when none match', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'de', 'es'
+          ];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'de', baseLanguage: 'de', score: 0});
+        });
       });
     });
   });
