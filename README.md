@@ -10,6 +10,12 @@ An FastBoot-enabled addon to detect the best language for your user.
 $ ember install ember-best-language
 ```
 
+## How does it work?
+
+`ember-best-language` uses a scoring system to determine the best language to use. The scoring system is based on the `Accept-Language` header on the FastBoot-side. On the client side, we use `navigator.languages` and give a score to each language based on its order in the array.
+
+`ember-best-language` also split language code from country code to make sure that if the user reads `fr-CA` and your system supports `fr`, you will have a match.
+
 ## Usage
 
 `ember-best-language` provides a service with two methods:
@@ -53,6 +59,8 @@ export default Ember.Route.extend({
   }
 });
 ```
+
+__Note: for the time being, we only support an array of language codes without country code e.g. 'es'. PRs welcome! :)__
 
 ## Contributing
 
