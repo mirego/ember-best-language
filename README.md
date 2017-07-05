@@ -16,6 +16,8 @@ $ ember install ember-best-language
 
 `ember-best-language` also split language code from country code to make sure that if the user reads `fr-CA` and your system supports `fr`, you will have a match.
 
+This addon is inspired by the work of [Rémi Prévost](https://github.com/remiprev) in [`plug_best`](https://github.com/remiprev/plug_best), you should check it out!
+
 ## Usage
 
 `ember-best-language` provides a service with two methods:
@@ -85,8 +87,6 @@ $ ember build
 ```
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
-
-This addon is inspired by the work of [Rémi Prévost](https://github.com/remiprev) in [`plug_best`](https://github.com/remiprev/plug_best), you should check it out!
 
 ## License
 
