@@ -86,7 +86,7 @@ $ ember build
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
-This addon is inspired by the work of Rémi Prévost in https://github.com/remiprev/plug_best, you should check it out!
+This addon is inspired by the work of [Rémi Prévost](https://github.com/remiprev) in [`plug_best`](https://github.com/remiprev/plug_best), you should check it out!
 
 ## License
 
