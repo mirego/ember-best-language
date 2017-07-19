@@ -23,7 +23,7 @@ export default Ember.Service.extend({
 
   _fetchHeaderLanguages() {
     const headers = this.get('fastboot.request.headers');
-    return this._parseHeader(headers.get('Accept-Language'));
+    return this._parseHeader(headers.get('Accept-Language') || '');
   },
 
   _fetchBrowserLanguages() {

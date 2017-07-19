@@ -9,75 +9,127 @@ describe('Unit | Service | best-language', () => {
   });
 
   describe('when running inside FastBoot', () => {
-    const fastbootStub = Ember.Service.extend({
-      isFastBoot: true,
-      request: Ember.Object.create({
-        headers: Ember.Object.create({
-          'Accept-Language': 'en-US,en;q=0.8,fr;q=0.6'
+    describe('and accept-language header is sent', () => {
+      const fastbootStub = Ember.Service.extend({
+        isFastBoot: true,
+        request: Ember.Object.create({
+          headers: Ember.Object.create({
+            'Accept-Language': 'en-US,en;q=0.8,fr;q=0.6'
+          })
         })
-      })
-    });
+      });
 
-    beforeEach(function() {
-      this.register('service:fastboot', fastbootStub);
-      this.inject.service('fastboot');
-    });
+      beforeEach(function() {
+        this.register('service:fastboot', fastbootStub);
+        this.inject.service('fastboot');
+      });
 
-    describe('_fetchHeaderLanguages', () => {
-      it('should fetch the languages from the `Accept-Language` header', function() {
-        const service = this.subject();
+      describe('_fetchHeaderLanguages', () => {
+        it('should fetch the languages from the `Accept-Language` header', function() {
+          const service = this.subject();
 
-        const expectedLanguages = [
-          {language: 'en-US', score: 1},
-          {language: 'en', score: 0.8},
-          {language: 'fr', score: 0.6}
-        ];
+          const expectedLanguages = [
+            {language: 'en-US', score: 1},
+            {language: 'en', score: 0.8},
+            {language: 'fr', score: 0.6}
+          ];
 
-        expect(service._fetchHeaderLanguages()).to.deep.equal(expectedLanguages);
+          expect(service._fetchHeaderLanguages()).to.deep.equal(expectedLanguages);
+        });
+      });
+
+      describe('bestLanguage', () => {
+        it ('should return the best language when one matches', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'en', 'es'
+          ];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+        });
+
+        it('should return `null` when none match', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'de', 'es'
+          ];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal(null);
+        });
+      });
+
+      describe('bestLanguageOrFirst', () => {
+        it ('should return the best language when one matches', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'en', 'es'
+          ];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+        });
+
+        it('should return the first supported language when none match', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'de', 'es'
+          ];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'de', baseLanguage: 'de', score: 0});
+        });
       });
     });
 
-    describe('bestLanguage', () => {
-      it ('should return the best language when one matches', function() {
-        const service = this.subject();
-
-        const supportedLanguages = [
-          'en', 'es'
-        ];
-
-        expect(service.bestLanguage(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+    describe('and accept-language header is missing', () => {
+      const fastbootStub = Ember.Service.extend({
+        isFastBoot: true,
+        request: Ember.Object.create({
+          headers: Ember.Object.create({})
+        })
       });
 
-      it('should return `null` when none match', function() {
-        const service = this.subject();
-
-        const supportedLanguages = [
-          'de', 'es'
-        ];
-
-        expect(service.bestLanguage(supportedLanguages)).to.deep.equal(null);
-      });
-    });
-
-    describe('bestLanguageOrFirst', () => {
-      it ('should return the best language when one matches', function() {
-        const service = this.subject();
-
-        const supportedLanguages = [
-          'en', 'es'
-        ];
-
-        expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
+      beforeEach(function() {
+        this.register('service:fastboot', fastbootStub);
+        this.inject.service('fastboot');
       });
 
-      it('should return the first supported language when none match', function() {
-        const service = this.subject();
+      describe('_fetchHeaderLanguages', () => {
+        it('should fetch an empty string from the `Accept-Language` header', function() {
+          const service = this.subject();
 
-        const supportedLanguages = [
-          'de', 'es'
-        ];
+          const expectedLanguages = [
+            {language: '', score: 1}
+          ];
 
-        expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'de', baseLanguage: 'de', score: 0});
+          expect(service._fetchHeaderLanguages()).to.deep.equal(expectedLanguages);
+        });
+      });
+
+      describe('bestLanguage', () => {
+        it('should return `null`', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'de', 'es'
+          ];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal(null);
+        });
+      });
+
+      describe('bestLanguageOrFirst', () => {
+        it('should return the first supported language', function() {
+          const service = this.subject();
+
+          const supportedLanguages = [
+            'de', 'es'
+          ];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal({language: 'de', baseLanguage: 'de', score: 0});
+        });
       });
     });
   });
