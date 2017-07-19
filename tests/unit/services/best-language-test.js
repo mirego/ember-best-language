@@ -9,7 +9,6 @@ describe('Unit | Service | best-language', () => {
   });
 
   describe('when running inside FastBoot', () => {
-
     describe('and accept-language header is sent', () => {
       const fastbootStub = Ember.Service.extend({
         isFastBoot: true,
