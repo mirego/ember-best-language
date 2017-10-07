@@ -1,12 +1,14 @@
 import Ember from 'ember';
 
-const {inject} = Ember;
-
 export default Ember.Service.extend({
-  fastboot: inject.service('fastboot'),
+  fastboot: Ember.computed(function() {
+    let owner = Ember.getOwner(this);
+
+    return owner.lookup('service:fastboot');
+  }),
 
   bestLanguage(languages) {
-    const userLanguages = this.get('fastboot.isFastBoot')
+    const userLanguages = this.getWithDefault('fastboot.isFastBoot', false)
       ? this._fetchHeaderLanguages()
       : this._fetchBrowserLanguages();
 
