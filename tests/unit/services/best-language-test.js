@@ -4,9 +4,7 @@ import {describe, before, beforeEach, it} from 'mocha';
 import {setupTest} from 'ember-mocha';
 
 describe('Unit | Service | best-language', () => {
-  setupTest('service:best-language', {
-    needs: ['service:fastboot']
-  });
+  setupTest('service:best-language');
 
   describe('when running inside FastBoot', () => {
     describe('and accept-language header is sent', () => {
@@ -135,15 +133,6 @@ describe('Unit | Service | best-language', () => {
   });
 
   describe('when running inside the browser', () => {
-    const fastbootStub = Ember.Service.extend({
-      isFastboot: false
-    });
-
-    beforeEach(function() {
-      this.register('service:fastboot', fastbootStub);
-      this.inject.service('fastboot');
-    });
-
     describe('with different language and languages properties', () => {
       before(() => {
         Object.defineProperty(window.navigator, 'languages', {value: ['fr', 'en-US', 'en'], configurable: true});
