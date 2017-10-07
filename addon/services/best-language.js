@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   }),
 
   bestLanguage(languages) {
-    const userLanguages = this.get('fastboot.isFastBoot')
+    const userLanguages = this.getWithDefault('fastboot.isFastBoot', false)
       ? this._fetchHeaderLanguages()
       : this._fetchBrowserLanguages();
 
