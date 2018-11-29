@@ -69,7 +69,7 @@ __Note: for the time being, we only support an array of language codes without c
 ```shell
 $ git clone https://github.com/mirego/ember-best-language
 $ cd ember-best-language
-$ yarn install
+$ npm install
 ```
 
 ## Running tests
@@ -90,7 +90,7 @@ For more information on using ember-cli, visit [https://ember-cli.com/](https://
 
 ## License
 
-`ember-best-language` is © 2017 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).
+`ember-best-language` is © 2018 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).
 See the [`LICENSE.md`](https://github.com/mirego/ember-best-language/blob/master/LICENSE.md) file.
 
 ## About Mirego
