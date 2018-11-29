@@ -53,16 +53,14 @@ export default Ember.Route.extend({
   bestLanguage: inject.service('best-language'),
 
   beforeModel() {
-    const bestLanguage = this.get('bestLanguage').bestLanguage(['fr', 'de']);
+    const bestLanguage = this.get('bestLanguage').bestLanguage(['fr', 'de', 'en-US']);
     // => null
 
-    const bestLanguageOrFirst = this.get('bestLanguage').bestLanguageOrFirst(['fr', 'de']);
+    const bestLanguageOrFirst = this.get('bestLanguage').bestLanguageOrFirst(['fr', 'de', 'en-US']);
     // => {language: 'fr', baseLanguage: 'fr', score: 0}
   }
 });
 ```
-
-__Note: for the time being, we only support an array of language codes without country code e.g. 'es'. PRs welcome! :)__
 
 ## Contributing
 

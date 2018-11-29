@@ -10,7 +10,7 @@ declare class FastBoot {
 interface Language {
   language: string;
   baseLanguage?: string;
-  score: number;
+  score?: number;
 }
 
 export default class BestLanguage extends Service {
@@ -20,6 +20,10 @@ export default class BestLanguage extends Service {
   }
 
   bestLanguage(languages: string[]): Language | null {
+    const supportedBaseLanguages = languages.map(language => {
+      return this.mapToLanguage(language).baseLanguage;
+    });
+
     const userLanguages =
       (this.fastboot && this.fastboot.isFastBoot) || false
         ? this.fetchHeaderLanguages()
@@ -28,23 +32,25 @@ export default class BestLanguage extends Service {
     const userLanguagesWithBaseLanguage = this.mapWithBaseLanguage(
       userLanguages
     );
+
     const supportedUserLanguages = this.intersectLanguages(
       userLanguagesWithBaseLanguage,
-      languages
+      supportedBaseLanguages
     );
+
     const sortedLanguages = this.sortLanguagesByScore(supportedUserLanguages);
 
     return sortedLanguages[0] || null;
   }
 
   bestLanguageOrFirst(languages: string[]): Language {
-    return (
-      this.bestLanguage(languages) || {
-        baseLanguage: languages[0],
-        language: languages[0],
-        score: 0
-      }
-    );
+    const bestLanguage = this.bestLanguage(languages);
+
+    if (bestLanguage) return bestLanguage;
+
+    const firstLanguage = this.mapToLanguage(languages[0]);
+
+    return {...firstLanguage, score: 0};
   }
 
   private fetchHeaderLanguages(): Language[] {
@@ -82,6 +88,13 @@ export default class BestLanguage extends Service {
     return {language, score};
   }
 
+  private mapToLanguage(language: string): Language {
+    return {
+      language,
+      baseLanguage: language.replace(/[\-_].+$/, '')
+    };
+  }
+
   private mapWithBaseLanguage(languages: Language[]): Language[] {
     return languages.map(languageObject => {
       return {
@@ -93,11 +106,11 @@ export default class BestLanguage extends Service {
 
   private intersectLanguages(
     userLanguages: Language[],
-    languages: string[]
+    supportedBaseLanguages: string[]
   ): Language[] {
-    return userLanguages.filter(({baseLanguage}) =>
-      languages.includes(baseLanguage)
-    );
+    return userLanguages.filter(({baseLanguage}) => {
+      return supportedBaseLanguages.includes(baseLanguage);
+    });
   }
 
   private sortLanguagesByScore(languages: Language[]): Language[] {

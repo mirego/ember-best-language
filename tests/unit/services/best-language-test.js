@@ -50,6 +50,18 @@ describe('Unit | Service | best-language', () => {
           });
         });
 
+        it('should handle supported languages with country code', function() {
+          const service = this.subject();
+
+          const supportedLanguages = ['en-CA', 'en-US', 'fr'];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
+            language: 'en-US',
+            baseLanguage: 'en',
+            score: 1
+          });
+        });
+
         it('should return `null` when none match', function() {
           const service = this.owner.lookup('service:best-language');
 
@@ -70,13 +82,23 @@ describe('Unit | Service | best-language', () => {
           );
         });
 
+        it('should handle supported languages with country code', function() {
+          const service = this.subject();
+
+          const supportedLanguages = ['en-CA', 'en-US', 'fr'];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
+            {language: 'en-US', baseLanguage: 'en', score: 1}
+          );
+        });
+
         it('should return the first supported language when none match', function() {
           const service = this.owner.lookup('service:best-language');
 
-          const supportedLanguages = ['de', 'es'];
+          const supportedLanguages = ['de-DE', 'es'];
 
           expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'de', baseLanguage: 'de', score: 0}
+            {language: 'de-DE', baseLanguage: 'de', score: 0}
           );
         });
       });
@@ -250,6 +272,18 @@ describe('Unit | Service | best-language', () => {
           });
         });
 
+        it('should handle supported languages with country code', function() {
+          const service = this.subject();
+
+          const supportedLanguages = ['en-CA', 'en-US', 'fr'];
+
+          expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
+            language: 'en-US',
+            baseLanguage: 'en',
+            score: 1
+          });
+        });
+
         it('should return `null` when none match', function() {
           const service = this.owner.lookup('service:best-language');
 
@@ -270,13 +304,23 @@ describe('Unit | Service | best-language', () => {
           );
         });
 
+        it('should handle supported languages with country code', function() {
+          const service = this.subject();
+
+          const supportedLanguages = ['en-CA', 'en-US', 'fr'];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
+            {language: 'en-US', baseLanguage: 'en', score: 1}
+          );
+        });
+
         it('should return the first supported language when none match', function() {
           const service = this.owner.lookup('service:best-language');
 
-          const supportedLanguages = ['de', 'es'];
+          const supportedLanguages = ['de-DE', 'es'];
 
           expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'de', baseLanguage: 'de', score: 0}
+            {language: 'de-DE', baseLanguage: 'de', score: 0}
           );
         });
       });
