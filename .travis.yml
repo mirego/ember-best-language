@@ -9,23 +9,29 @@ dist: trusty
 addons:
   chrome: stable
 
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 env:
-  - EMBER_TRY_SCENARIO=ember-lts-without-fastboot
-  - EMBER_TRY_SCENARIO=ember-latest-without-fastboot
+  - EMBER_TRY_SCENARIO=ember-lts-2.18-without-fastboot
+  - EMBER_TRY_SCENARIO=ember-release-without-fastboot
   - EMBER_TRY_SCENARIO=ember-beta-without-fastboot
-  - EMBER_TRY_SCENARIO=ember-lts-with-fastboot
-  - EMBER_TRY_SCENARIO=ember-latest-with-fastboot
+  - EMBER_TRY_SCENARIO=ember-canary-without-fastboot
+  - EMBER_TRY_SCENARIO=ember-lts-2.18-with-fastboot
+  - EMBER_TRY_SCENARIO=ember-release-with-fastboot
   - EMBER_TRY_SCENARIO=ember-beta-with-fastboot
+  - EMBER_TRY_SCENARIO=ember-canary-with-fastboot
 
 matrix:
   fast_finish: true
 
 install:
-  - npm install -g npm@6.1.0
-  - npm install
+  - yarn install
 
 script:
-  - npm run lint
+  - yarn run lint
   # Usually, it’s ok to finish the test scenario without reverting
   # to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup

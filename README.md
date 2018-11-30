@@ -69,13 +69,13 @@ __Note: for the time being, we only support an array of language codes without c
 ```shell
 $ git clone https://github.com/mirego/ember-best-language
 $ cd ember-best-language
-$ npm install
+$ yarn install
 ```
 
 ## Running tests
 
 ```shell
-$ npm test # Runs `ember try:each` to test the addon against multiple Ember versions
+$ yarn test # Runs `ember try:each` to test the addon against multiple Ember versions
 $ ember test
 $ ember test --server
 ```
