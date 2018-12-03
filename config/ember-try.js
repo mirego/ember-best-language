@@ -5,27 +5,29 @@
 const getChannelURL = require('ember-source-channel-url');
 
 module.exports = function() {
-  return Promise.all([getChannelURL('release'), getChannelURL('beta'), getChannelURL('canary')]).then((urls) => {
+  return Promise.all([
+    getChannelURL('release'),
+    getChannelURL('beta'),
+    getChannelURL('canary')
+  ]).then(urls => {
     return {
       useYarn: true,
       scenarios: [
         {
-          name: 'ember-lts-2.18-without-fastboot',
-          command: 'ember test --filter "when running inside FastBoot" --invert',
-          env: {
-            EMBER_OPTIONAL_FEATURES: JSON.stringify({'jquery-integration': true})
-          },
+          name: 'ember-lts-3.4-without-fastboot',
+          command:
+            'ember test --filter "when running inside FastBoot" --invert',
           npm: {
             dependencies: {
-              'ember-source': '~2.18.0',
-              'ember-cli-fastboot': null,
-              '@ember/jquery': '^0.5.1'
+              'ember-source': '^3.4.0',
+              'ember-cli-fastboot': null
             }
           }
         },
         {
           name: 'ember-release-without-fastboot',
-          command: 'ember test --filter "when running inside FastBoot" --invert',
+          command:
+            'ember test --filter "when running inside FastBoot" --invert',
           npm: {
             dependencies: {
               'ember-source': urls[0],
@@ -35,7 +37,8 @@ module.exports = function() {
         },
         {
           name: 'ember-beta-without-fastboot',
-          command: 'ember test --filter "when running inside FastBoot" --invert',
+          command:
+            'ember test --filter "when running inside FastBoot" --invert',
           npm: {
             dependencies: {
               'ember-source': urls[1],
@@ -54,14 +57,10 @@ module.exports = function() {
           }
         },
         {
-          name: 'ember-lts-2.18-with-fastboot',
-          env: {
-            EMBER_OPTIONAL_FEATURES: JSON.stringify({'jquery-integration': true})
-          },
+          name: 'ember-lts-3.4-with-fastboot',
           npm: {
             dependencies: {
-              'ember-source': '~2.18.0',
-              '@ember/jquery': '^0.5.1'
+              'ember-source': '^3.4.0'
             }
           }
         },
@@ -69,8 +68,7 @@ module.exports = function() {
           name: 'ember-release-with-fastboot',
           npm: {
             dependencies: {
-              'ember-source': urls[0],
-              'ember-cli-fastboot': null
+              'ember-source': urls[0]
             }
           }
         },
@@ -78,8 +76,7 @@ module.exports = function() {
           name: 'ember-beta-with-fastboot',
           npm: {
             dependencies: {
-              'ember-source': urls[1],
-              'ember-cli-fastboot': null
+              'ember-source': urls[1]
             }
           }
         },
