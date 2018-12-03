@@ -9,7 +9,7 @@ declare class FastBoot {
 
 interface Language {
   language: string;
-  baseLanguage?: string;
+  baseLanguage: string;
   score: number;
 }
 
@@ -20,31 +20,35 @@ export default class BestLanguage extends Service {
   }
 
   bestLanguage(languages: string[]): Language | null {
+    const supportedBaseLanguages = languages.map(language => {
+      return this.getBaseLanguage(language);
+    });
+
     const userLanguages =
       (this.fastboot && this.fastboot.isFastBoot) || false
         ? this.fetchHeaderLanguages()
         : this.fetchBrowserLanguages();
 
-    const userLanguagesWithBaseLanguage = this.mapWithBaseLanguage(
-      userLanguages
-    );
     const supportedUserLanguages = this.intersectLanguages(
-      userLanguagesWithBaseLanguage,
-      languages
+      userLanguages,
+      supportedBaseLanguages
     );
+
     const sortedLanguages = this.sortLanguagesByScore(supportedUserLanguages);
 
     return sortedLanguages[0] || null;
   }
 
   bestLanguageOrFirst(languages: string[]): Language {
-    return (
-      this.bestLanguage(languages) || {
-        baseLanguage: languages[0],
-        language: languages[0],
-        score: 0
-      }
-    );
+    const bestLanguage = this.bestLanguage(languages);
+
+    if (bestLanguage) return bestLanguage;
+
+    return {
+      baseLanguage: this.getBaseLanguage(languages[0]),
+      language: languages[0],
+      score: 0
+    };
   }
 
   private fetchHeaderLanguages(): Language[] {
@@ -64,6 +68,7 @@ export default class BestLanguage extends Service {
       .filter(language => !!language)
       .map((language, index, array) => ({
         language,
+        baseLanguage: this.getBaseLanguage(language),
         score: this.computeScore(index, array.length)
       }));
   }
@@ -79,25 +84,24 @@ export default class BestLanguage extends Service {
 
     const score = parseFloat(scoreString.split('=')[1]) || 0;
 
-    return {language, score};
+    return {
+      language,
+      score,
+      baseLanguage: this.getBaseLanguage(language)
+    };
   }
 
-  private mapWithBaseLanguage(languages: Language[]): Language[] {
-    return languages.map(languageObject => {
-      return {
-        ...languageObject,
-        baseLanguage: languageObject.language.split('-')[0]
-      };
-    });
+  private getBaseLanguage(language: string): string {
+    return language.replace(/[\-_].+$/, '');
   }
 
   private intersectLanguages(
     userLanguages: Language[],
-    languages: string[]
+    supportedBaseLanguages: string[]
   ): Language[] {
-    return userLanguages.filter(({baseLanguage}) =>
-      languages.includes(baseLanguage)
-    );
+    return userLanguages.filter(({baseLanguage}) => {
+      return supportedBaseLanguages.includes(baseLanguage);
+    });
   }
 
   private sortLanguagesByScore(languages: Language[]): Language[] {
