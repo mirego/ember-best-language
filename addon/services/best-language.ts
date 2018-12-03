@@ -9,8 +9,8 @@ declare class FastBoot {
 
 interface Language {
   language: string;
-  baseLanguage?: string;
-  score?: number;
+  baseLanguage: string;
+  score: number;
 }
 
 export default class BestLanguage extends Service {
@@ -21,7 +21,7 @@ export default class BestLanguage extends Service {
 
   bestLanguage(languages: string[]): Language | null {
     const supportedBaseLanguages = languages.map(language => {
-      return this.mapToLanguage(language).baseLanguage;
+      return this.getBaseLanguage(language);
     });
 
     const userLanguages =
@@ -29,12 +29,8 @@ export default class BestLanguage extends Service {
         ? this.fetchHeaderLanguages()
         : this.fetchBrowserLanguages();
 
-    const userLanguagesWithBaseLanguage = this.mapWithBaseLanguage(
-      userLanguages
-    );
-
     const supportedUserLanguages = this.intersectLanguages(
-      userLanguagesWithBaseLanguage,
+      userLanguages,
       supportedBaseLanguages
     );
 
@@ -48,9 +44,11 @@ export default class BestLanguage extends Service {
 
     if (bestLanguage) return bestLanguage;
 
-    const firstLanguage = this.mapToLanguage(languages[0]);
-
-    return {...firstLanguage, score: 0};
+    return {
+      baseLanguage: this.getBaseLanguage(languages[0]),
+      language: languages[0],
+      score: 0
+    };
   }
 
   private fetchHeaderLanguages(): Language[] {
@@ -70,6 +68,7 @@ export default class BestLanguage extends Service {
       .filter(language => !!language)
       .map((language, index, array) => ({
         language,
+        baseLanguage: this.getBaseLanguage(language),
         score: this.computeScore(index, array.length)
       }));
   }
@@ -85,23 +84,15 @@ export default class BestLanguage extends Service {
 
     const score = parseFloat(scoreString.split('=')[1]) || 0;
 
-    return {language, score};
-  }
-
-  private mapToLanguage(language: string): Language {
     return {
       language,
-      baseLanguage: language.replace(/[\-_].+$/, '')
+      score,
+      baseLanguage: this.getBaseLanguage(language)
     };
   }
 
-  private mapWithBaseLanguage(languages: Language[]): Language[] {
-    return languages.map(languageObject => {
-      return {
-        ...languageObject,
-        baseLanguage: languageObject.language.split('-')[0]
-      };
-    });
+  private getBaseLanguage(language: string): string {
+    return language.replace(/[\-_].+$/, '');
   }
 
   private intersectLanguages(
