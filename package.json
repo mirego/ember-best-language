@@ -77,7 +77,7 @@
     "typescript": "^3.2.1"
   },
   "engines": {
-    "node": "10.14.1",
+    "node": "6.* || 8.* || >= 10.*",
     "npm": "6.4.1"
   },
   "ember-addon": {
