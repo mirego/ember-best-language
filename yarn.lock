@@ -3652,27 +3652,6 @@ ember-cli-typescript-blueprints@^1.0.0:
     inflection "^1.12.0"
     silent-error "^1.1.0"
 
-ember-cli-typescript-blueprints@^2.0.0-beta.1:
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-typescript-blueprints/-/ember-cli-typescript-blueprints-2.0.0-beta.1.tgz#2db2e34ad01b5a50a4459c2f7cfc8f132b21fcea"
-  integrity sha512-tU1hN9Wj/nzWrSArogr/n9j8kfsv+2wueRuaIr7X+h4klb/Vb92bVkyW1xx8SW9hsWkv8n7ct8PzMmW033ws8g==
-  dependencies:
-    chalk "^2.4.1"
-    ember-cli-babel "^6.6.0"
-    ember-cli-get-component-path-option "^1.0.0"
-    ember-cli-is-package-missing "^1.0.0"
-    ember-cli-normalize-entity-name "^1.0.0"
-    ember-cli-path-utils "^1.0.0"
-    ember-cli-string-utils "^1.1.0"
-    ember-cli-test-info "^1.0.0"
-    ember-cli-valid-component-name "^1.0.0"
-    ember-cli-version-checker "^2.1.2"
-    ember-router-generator "^1.2.3"
-    exists-sync "^0.1.0"
-    fs-extra "^7.0.0"
-    inflection "^1.12.0"
-    silent-error "^1.1.0"
-
 ember-cli-typescript@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-1.5.0.tgz#076efe723c52ca2c8f0cdc9ee2ef640e941aa2c4"
