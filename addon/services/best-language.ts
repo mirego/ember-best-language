@@ -59,7 +59,7 @@ export default class BestLanguage extends Service {
 
   private fetchBrowserLanguages(): Language[] {
     const languages = [
-      ...navigator.languages,
+      ...(navigator.languages || []),
       navigator.language,
       (navigator as any).userLanguage
     ];
