@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/mirego/ember-best-language.svg?branch=master)](https://travis-ci.org/mirego/ember-best-language)
 
-An FastBoot-enabled addon to detect the best language for your user.
+A FastBoot-enabled addon to detect the best language for your user.
 
 ## Installation
 
@@ -28,15 +28,14 @@ This addon is inspired by the work of [Rémi Prévost](https://github.com/remipr
 To find out which language is the best one to use among a list of supported languages:
 
 ```js
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import {inject as service} from '@ember/service';
 
-const {inject} = Ember;
-
-export default Ember.Route.extend({
-  bestLanguage: inject.service('best-language'),
+export default class extends Route {
+  @service('best-language') bestLanguage;
 
   beforeModel() {
-    const bestLanguage = this.get('bestLanguage').bestLanguage(['en', 'fr']);
+    const bestLanguage = this.bestLanguage.bestLanguage(['en', 'fr']);
     // => {language: 'en-US', baseLanguage: 'en', score: 1}
   }
 });
@@ -45,18 +44,17 @@ export default Ember.Route.extend({
 If none of the user’s languages are supported, `ember-best-language` will return `null`. However, you can use the `bestLanguageOrFirst` method to make it return the first supported language in those cases.
 
 ```js
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import {inject as service} from '@ember/service';
 
-const {inject} = Ember;
-
-export default Ember.Route.extend({
-  bestLanguage: inject.service('best-language'),
+export default class extends Route {
+  @service('best-language') bestLanguage;
 
   beforeModel() {
-    const bestLanguage = this.get('bestLanguage').bestLanguage(['fr', 'de', 'en-US']);
+    const bestLanguage = this.bestLanguage.bestLanguage(['fr', 'de', 'en-US']);
     // => null
 
-    const bestLanguageOrFirst = this.get('bestLanguage').bestLanguageOrFirst(['fr', 'de', 'en-US']);
+    const bestLanguageOrFirst = this.bestLanguage.bestLanguageOrFirst(['fr', 'de', 'en-US']);
     // => {language: 'fr', baseLanguage: 'fr', score: 0}
   }
 });
@@ -88,7 +86,7 @@ For more information on using ember-cli, visit [https://ember-cli.com/](https://
 
 ## License
 
-`ember-best-language` is © 2017-2018 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).
+`ember-best-language` is © 2017-2019 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).
 See the [`LICENSE.md`](https://github.com/mirego/ember-best-language/blob/master/LICENSE.md) file.
 
 ## About Mirego
