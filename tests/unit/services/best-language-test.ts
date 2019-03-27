@@ -1,7 +1,8 @@
 import Service from '@ember/service';
 import {expect} from 'chai';
-import {describe, before, beforeEach, it} from 'mocha';
 import {setupTest} from 'ember-mocha';
+import BestLanguage from 'ember-best-language/services/best-language';
+import {before, beforeEach, describe, it} from 'mocha';
 
 describe('Unit | Service | best-language', () => {
   setupTest();
@@ -39,31 +40,31 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguage', () => {
         it('should return the best language when one matches', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en', 'es'];
 
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
-            language: 'en-US',
             baseLanguage: 'en',
+            language: 'en-US',
             score: 1
           });
         });
 
         it('should handle supported languages with country code', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
-            language: 'en-US',
             baseLanguage: 'en',
+            language: 'en-US',
             score: 1
           });
         });
 
         it('should return `null` when none match', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['de', 'es'];
 
@@ -73,7 +74,7 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguageOrFirst', () => {
         it('should return the best language when one matches', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en', 'es'];
 
@@ -83,7 +84,7 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should handle supported languages with country code', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
@@ -93,7 +94,7 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should return the first supported language when none match', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['de-DE', 'es'];
 
@@ -132,7 +133,7 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguage', () => {
         it('should return `null`', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['de', 'es'];
 
@@ -142,7 +143,7 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguageOrFirst', () => {
         it('should return the first supported language', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['de', 'es'];
 
@@ -158,16 +159,16 @@ describe('Unit | Service | best-language', () => {
     describe('with different language and languages properties', () => {
       before(() => {
         Object.defineProperty(window.navigator, 'languages', {
-          value: ['fr', 'en-US', 'en'],
-          configurable: true
+          configurable: true,
+          value: ['fr', 'en-US', 'en']
         });
         Object.defineProperty(window.navigator, 'language', {
-          value: 'en-US',
-          configurable: true
+          configurable: true,
+          value: 'en-US'
         });
         Object.defineProperty(window.navigator, 'userLanguage', {
-          value: undefined,
-          configurable: true
+          configurable: true,
+          value: undefined
         });
       });
 
@@ -191,16 +192,16 @@ describe('Unit | Service | best-language', () => {
     describe('with default language and languages properties', () => {
       before(() => {
         Object.defineProperty(window.navigator, 'languages', {
-          value: ['en-US', 'en', 'fr'],
-          configurable: true
+          configurable: true,
+          value: ['en-US', 'en', 'fr']
         });
         Object.defineProperty(window.navigator, 'language', {
-          value: 'en-US',
-          configurable: true
+          configurable: true,
+          value: 'en-US'
         });
         Object.defineProperty(window.navigator, 'userLanguage', {
-          value: undefined,
-          configurable: true
+          configurable: true,
+          value: undefined
         });
       });
 
@@ -263,31 +264,31 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguage', () => {
         it('should return the best language when one matches', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en', 'es'];
 
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
-            language: 'en-US',
             baseLanguage: 'en',
+            language: 'en-US',
             score: 1
           });
         });
 
         it('should handle supported languages with country code', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
-            language: 'en-US',
             baseLanguage: 'en',
+            language: 'en-US',
             score: 1
           });
         });
 
         it('should return `null` when none match', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['de', 'es'];
 
@@ -297,7 +298,7 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguageOrFirst', () => {
         it('should return the best language when one matches', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en', 'es'];
 
@@ -307,7 +308,7 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should handle supported languages with country code', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
@@ -317,7 +318,7 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should return the first supported language when none match', function() {
-          const service = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup('service:best-language');
 
           const supportedLanguages = ['de-DE', 'es'];
 
@@ -335,15 +336,15 @@ describe('Unit | Service | best-language', () => {
         const service = this.owner.lookup('service:best-language');
 
         const inputLanguages = [
-          {language: 'fr', score: 0.6},
-          {language: 'en-US', score: 1},
-          {language: 'en', score: 0.8}
+          {baseLanguage: 'fr', language: 'fr', score: 0.6},
+          {baseLanguage: 'en', language: 'en-US', score: 1},
+          {baseLanguage: 'en', language: 'en', score: 0.8}
         ];
 
         const expectedLanguages = [
-          {language: 'en-US', score: 1},
-          {language: 'en', score: 0.8},
-          {language: 'fr', score: 0.6}
+          {baseLanguage: 'en', language: 'en-US', score: 1},
+          {baseLanguage: 'en', language: 'en', score: 0.8},
+          {baseLanguage: 'fr', language: 'fr', score: 0.6}
         ];
 
         expect(service.sortLanguagesByScore(inputLanguages)).to.deep.equal(

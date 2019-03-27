@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
+    "@types/chai": "4.1.7",
     "@types/ember": "3.1.0",
     "@types/ember-mocha": "0.14.6",
     "@types/ember-test-helpers": "1.0.5",
