@@ -40,7 +40,9 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguage', () => {
         it('should return the best language when one matches', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en', 'es'];
 
@@ -52,7 +54,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should handle supported languages with country code', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
@@ -64,7 +68,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should return `null` when none match', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['de', 'es'];
 
@@ -74,7 +80,9 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguageOrFirst', () => {
         it('should return the best language when one matches', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en', 'es'];
 
@@ -84,7 +92,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should handle supported languages with country code', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
@@ -94,7 +104,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should return the first supported language when none match', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['de-DE', 'es'];
 
@@ -133,7 +145,9 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguage', () => {
         it('should return `null`', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['de', 'es'];
 
@@ -143,7 +157,9 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguageOrFirst', () => {
         it('should return the first supported language', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['de', 'es'];
 
@@ -264,7 +280,9 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguage', () => {
         it('should return the best language when one matches', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en', 'es'];
 
@@ -276,7 +294,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should handle supported languages with country code', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
@@ -288,7 +308,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should return `null` when none match', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['de', 'es'];
 
@@ -298,7 +320,9 @@ describe('Unit | Service | best-language', () => {
 
       describe('bestLanguageOrFirst', () => {
         it('should return the best language when one matches', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en', 'es'];
 
@@ -308,7 +332,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should handle supported languages with country code', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
@@ -318,7 +344,9 @@ describe('Unit | Service | best-language', () => {
         });
 
         it('should return the first supported language when none match', function() {
-          const service: BestLanguage = this.owner.lookup('service:best-language');
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
 
           const supportedLanguages = ['de-DE', 'es'];
 
