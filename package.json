@@ -27,7 +27,7 @@
     "prettier": "prettier --write '{addon,app,tests,config}/**/*.{ts,js}' ember-cli-build.js testem.js",
     "prettier-check": "prettier -l '{addon,app,tests,config}/**/*.{ts,js}' ember-cli-build.js testem.js",
     "lint": "node_modules/.bin/eslint '{addon,app,config,tests}/**/*.js' './index.js' ember-cli-build.js testem.js",
-    "lint-typescript": "tslint -c tslint.json '{addon,app,config,tests,config}/**/*.ts'",
+    "lint-typescript": "tslint '{addon,app,config,config,tests}/**/*.ts'",
     "prepublishOnly": "ember ts:precompile",
     "postpublish": "ember ts:clean"
   },
