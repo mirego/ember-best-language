@@ -1,8 +1,10 @@
-# ember-best-language
-
-[![Build Status](https://travis-ci.com/mirego/ember-best-language.svg?branch=master)](https://travis-ci.com/mirego/ember-best-language)
-
-A FastBoot-enabled addon to detect the best language for your user.
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/11348/55352478-eaa0b280-548e-11e9-99b2-34f7f34986c0.png" width="600" />
+  <p><br />A FastBoot-enabled addon to detect the best language for your user.</p>
+  <p>
+    <a href="https://travis-ci.com/mirego/ember-best-language"><img src="https://travis-ci.com/mirego/ember-best-language.svg?branch=master" /></a>
+  </p>
+</div>
 
 ## Installation
 
@@ -82,12 +84,13 @@ $ ember test --server
 $ ember build
 ```
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+For more information on using ember-cli, visit <https://ember-cli.com>.
 
 ## License
 
-`ember-best-language` is © 2017-2019 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).
-See the [`LICENSE.md`](https://github.com/mirego/ember-best-language/blob/master/LICENSE.md) file.
+`ember-best-language` is © 2017-2019 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause). See the [`LICENSE.md`](https://github.com/mirego/ember-best-language/blob/master/LICENSE.md) file.
+
+The flag logo is based on [this lovely icon by Prasanta Kr Dutta](https://thenounproject.com/term/language/1824073), from The Noun Project. Used under a [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/) license.
 
 ## About Mirego
 
