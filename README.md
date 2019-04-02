@@ -3,6 +3,7 @@
   <p><br />A FastBoot-enabled addon to detect the best language for your user.</p>
   <p>
     <a href="https://travis-ci.com/mirego/ember-best-language"><img src="https://travis-ci.com/mirego/ember-best-language.svg?branch=master" /></a>
+    <a href="https://www.npmjs.com/package/ember-best-language"><img src="https://img.shields.io/npm/v/ember-best-language.svg" /></a>
   </p>
 </div>
 
