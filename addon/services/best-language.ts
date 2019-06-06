@@ -1,5 +1,5 @@
-import {computed} from '@ember-decorators/object';
 import {getOwner} from '@ember/application';
+import {computed} from '@ember/object';
 import Service from '@ember/service';
 
 declare class FastBoot {
@@ -14,7 +14,7 @@ interface Language {
 }
 
 export default class BestLanguage extends Service {
-  @computed
+  @computed()
   get fastboot(): FastBoot | null {
     return getOwner(this).lookup('service:fastboot');
   }

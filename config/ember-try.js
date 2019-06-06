@@ -2,13 +2,13 @@
 
 'use strict';
 
-const getChannelURL = require('ember-source-channel-url');
+const getURLFor = require('ember-source-channel-url');
 
 module.exports = function() {
   return Promise.all([
-    getChannelURL('release'),
-    getChannelURL('beta'),
-    getChannelURL('canary')
+    getURLFor('release'),
+    getURLFor('beta'),
+    getURLFor('canary')
   ]).then(urls => {
     return {
       useYarn: true,
@@ -20,6 +20,17 @@ module.exports = function() {
           npm: {
             dependencies: {
               'ember-source': '^3.4.0',
+              'ember-cli-fastboot': null
+            }
+          }
+        },
+        {
+          name: 'ember-lts-3.8-without-fastboot',
+          command:
+            'ember test --filter "when running inside FastBoot" --invert',
+          npm: {
+            dependencies: {
+              'ember-source': '^3.8.0',
               'ember-cli-fastboot': null
             }
           }
@@ -61,6 +72,14 @@ module.exports = function() {
           npm: {
             dependencies: {
               'ember-source': '^3.4.0'
+            }
+          }
+        },
+        {
+          name: 'ember-lts-3.8-with-fastboot',
+          npm: {
+            dependencies: {
+              'ember-source': '^3.8.0'
             }
           }
         },
