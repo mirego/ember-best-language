@@ -1,6 +1,6 @@
 {
   "name": "ember-best-language",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An FastBoot-enabled addon to detect the best language for your user.",
   "keywords": [
     "ember-addon",
