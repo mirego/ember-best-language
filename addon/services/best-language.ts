@@ -7,6 +7,10 @@ declare class FastBoot {
   request: Request;
 }
 
+interface LanguageWithMatch extends Language {
+  matches: string;
+}
+
 interface Language {
   language: string;
   baseLanguage: string;
@@ -20,10 +24,6 @@ export default class BestLanguage extends Service {
   }
 
   bestLanguage(languages: string[]): Language | null {
-    const supportedBaseLanguages = languages.map(language => {
-      return this.getBaseLanguage(language);
-    });
-
     const userLanguages =
       (this.fastboot && this.fastboot.isFastBoot) || false
         ? this.fetchHeaderLanguages()
@@ -31,12 +31,12 @@ export default class BestLanguage extends Service {
 
     const supportedUserLanguages = this.intersectLanguages(
       userLanguages,
-      supportedBaseLanguages
+      languages
     );
 
     const sortedLanguages = this.sortLanguagesByScore(supportedUserLanguages);
 
-    return sortedLanguages[0] || null;
+    return sortedLanguages[0] ? this.mapToLanguage(sortedLanguages[0]) : null;
   }
 
   bestLanguageOrFirst(languages: string[]): Language {
@@ -97,14 +97,36 @@ export default class BestLanguage extends Service {
 
   private intersectLanguages(
     userLanguages: Language[],
-    supportedBaseLanguages: string[]
-  ): Language[] {
-    return userLanguages.filter(({baseLanguage}) => {
-      return supportedBaseLanguages.includes(baseLanguage);
-    });
+    languages: string[]
+  ): LanguageWithMatch[] {
+    return userLanguages.reduce((memo, userLanguage) => {
+      const matchesLanguage = languages.find(
+        language =>
+          language.toLowerCase() === userLanguage.language.toLowerCase()
+      );
+
+      if (matchesLanguage) {
+        return [...memo, {...userLanguage, matches: matchesLanguage}];
+      }
+
+      const matchesBaseLanguage = languages.find(language => {
+        return (
+          this.getBaseLanguage(language).toLowerCase() ===
+          userLanguage.baseLanguage.toLowerCase()
+        );
+      });
+
+      if (matchesBaseLanguage) {
+        return [...memo, {...userLanguage, matches: matchesBaseLanguage}];
+      }
+
+      return memo;
+    }, []);
   }
 
-  private sortLanguagesByScore(languages: Language[]): Language[] {
+  private sortLanguagesByScore(
+    languages: LanguageWithMatch[]
+  ): LanguageWithMatch[] {
     return languages.sort(({score: scoreA}, {score: scoreB}) => {
       return scoreB - scoreA;
     });
@@ -119,5 +141,19 @@ export default class BestLanguage extends Service {
         : 1 - index / total;
 
     return parseFloat(score.toFixed(2));
+  }
+
+  private mapToLanguage(language: LanguageWithMatch): Language {
+    return {
+      baseLanguage: language.baseLanguage,
+      language: language.matches,
+      score: language.score
+    };
+  }
+}
+
+declare module '@ember/service' {
+  interface Registry {
+    'best-language': BestLanguage;
   }
 }
