@@ -48,12 +48,12 @@ describe('Unit | Service | best-language', () => {
 
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
             baseLanguage: 'en',
-            language: 'en-US',
+            language: 'en',
             score: 1
           });
         });
 
-        it('should handle supported languages with country code', function() {
+        it('should return the exact match when provided with languages with country codes', function() {
           const service: BestLanguage = this.owner.lookup(
             'service:best-language'
           );
@@ -63,6 +63,22 @@ describe('Unit | Service | best-language', () => {
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
             baseLanguage: 'en',
             language: 'en-US',
+            score: 1
+          });
+        });
+
+        it('should return the closest match when provided with languages with country codes', function() {
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
+
+          const supportedLanguages = ['en-CA', 'fr'];
+
+          const result = service.bestLanguage(supportedLanguages);
+
+          expect(result).to.deep.equal({
+            baseLanguage: 'en',
+            language: 'en-CA',
             score: 1
           });
         });
@@ -87,11 +103,11 @@ describe('Unit | Service | best-language', () => {
           const supportedLanguages = ['en', 'es'];
 
           expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'en-US', baseLanguage: 'en', score: 1}
+            {language: 'en', baseLanguage: 'en', score: 1}
           );
         });
 
-        it('should handle supported languages with country code', function() {
+        it('should return the exact match when provided with languages with country codes', function() {
           const service: BestLanguage = this.owner.lookup(
             'service:best-language'
           );
@@ -99,7 +115,27 @@ describe('Unit | Service | best-language', () => {
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
           expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'en-US', baseLanguage: 'en', score: 1}
+            {
+              baseLanguage: 'en',
+              language: 'en-US',
+              score: 1
+            }
+          );
+        });
+
+        it('should return the closest match when provided with languages with country codes', function() {
+          const service: BestLanguage = this.owner.lookup(
+            'service:best-language'
+          );
+
+          const supportedLanguages = ['en-CA', 'fr'];
+
+          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
+            {
+              baseLanguage: 'en',
+              language: 'en-CA',
+              score: 1
+            }
           );
         });
 
@@ -288,7 +324,7 @@ describe('Unit | Service | best-language', () => {
 
           expect(service.bestLanguage(supportedLanguages)).to.deep.equal({
             baseLanguage: 'en',
-            language: 'en-US',
+            language: 'en',
             score: 1
           });
         });
@@ -327,7 +363,7 @@ describe('Unit | Service | best-language', () => {
           const supportedLanguages = ['en', 'es'];
 
           expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'en-US', baseLanguage: 'en', score: 1}
+            {language: 'en', baseLanguage: 'en', score: 1}
           );
         });
 
@@ -394,13 +430,32 @@ describe('Unit | Service | best-language', () => {
         const supportedLanguages = ['en', 'es'];
 
         const expectedLanguages = [
-          {language: 'en-US', baseLanguage: 'en', score: 1},
-          {language: 'en', baseLanguage: 'en', score: 0.8}
+          {language: 'en-US', baseLanguage: 'en', score: 1, matches: 'en'},
+          {language: 'en', baseLanguage: 'en', score: 0.8, matches: 'en'}
         ];
 
-        expect(
-          service.intersectLanguages(userLanguages, supportedLanguages)
-        ).to.deep.equal(expectedLanguages);
+        const result = service.intersectLanguages(
+          userLanguages,
+          supportedLanguages
+        );
+
+        expect(result).to.deep.equal(expectedLanguages);
+
+        const supportedLanguagesWithCountryCodes = ['en-ca', 'es-es'];
+
+        const expectedLanguagesWithCountryCodes = [
+          {language: 'en-US', baseLanguage: 'en', score: 1, matches: 'en-ca'},
+          {language: 'en', baseLanguage: 'en', score: 0.8, matches: 'en-ca'}
+        ];
+
+        const resultWithCountryCodes = service.intersectLanguages(
+          userLanguages,
+          supportedLanguagesWithCountryCodes
+        );
+
+        expect(resultWithCountryCodes).to.deep.equal(
+          expectedLanguagesWithCountryCodes
+        );
       });
     });
   });
