@@ -102,9 +102,9 @@ describe('Unit | Service | best-language', () => {
 
           const supportedLanguages = ['en', 'es'];
 
-          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'en', baseLanguage: 'en', score: 1}
-          );
+          expect(
+            service.bestLanguageOrFirst(supportedLanguages)
+          ).to.deep.equal({language: 'en', baseLanguage: 'en', score: 1});
         });
 
         it('should return the exact match when provided with languages with country codes', function() {
@@ -146,9 +146,9 @@ describe('Unit | Service | best-language', () => {
 
           const supportedLanguages = ['de-DE', 'es'];
 
-          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'de-DE', baseLanguage: 'de', score: 0}
-          );
+          expect(
+            service.bestLanguageOrFirst(supportedLanguages)
+          ).to.deep.equal({language: 'de-DE', baseLanguage: 'de', score: 0});
         });
       });
     });
@@ -199,9 +199,9 @@ describe('Unit | Service | best-language', () => {
 
           const supportedLanguages = ['de', 'es'];
 
-          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'de', baseLanguage: 'de', score: 0}
-          );
+          expect(
+            service.bestLanguageOrFirst(supportedLanguages)
+          ).to.deep.equal({language: 'de', baseLanguage: 'de', score: 0});
         });
       });
     });
@@ -362,9 +362,9 @@ describe('Unit | Service | best-language', () => {
 
           const supportedLanguages = ['en', 'es'];
 
-          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'en', baseLanguage: 'en', score: 1}
-          );
+          expect(
+            service.bestLanguageOrFirst(supportedLanguages)
+          ).to.deep.equal({language: 'en', baseLanguage: 'en', score: 1});
         });
 
         it('should handle supported languages with country code', function() {
@@ -374,9 +374,9 @@ describe('Unit | Service | best-language', () => {
 
           const supportedLanguages = ['en-CA', 'en-US', 'fr'];
 
-          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'en-US', baseLanguage: 'en', score: 1}
-          );
+          expect(
+            service.bestLanguageOrFirst(supportedLanguages)
+          ).to.deep.equal({language: 'en-US', baseLanguage: 'en', score: 1});
         });
 
         it('should return the first supported language when none match', function() {
@@ -386,9 +386,9 @@ describe('Unit | Service | best-language', () => {
 
           const supportedLanguages = ['de-DE', 'es'];
 
-          expect(service.bestLanguageOrFirst(supportedLanguages)).to.deep.equal(
-            {language: 'de-DE', baseLanguage: 'de', score: 0}
-          );
+          expect(
+            service.bestLanguageOrFirst(supportedLanguages)
+          ).to.deep.equal({language: 'de-DE', baseLanguage: 'de', score: 0});
         });
       });
     });
