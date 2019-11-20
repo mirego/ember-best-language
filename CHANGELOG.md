@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2019-11-20
+### Changed
+- Update dependencies
+- Unpin ember-cli-babel and ember-cli-typescript versions
+
 ## [2.0.0] - 2019-10-02
 ### Breaking
 - `bestLanguage` and `bestLanguageOrFirst` now only return app supported languages, see [#33](https://github.com/mirego/ember-best-language/pull/33)
