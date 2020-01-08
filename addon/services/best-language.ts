@@ -1,5 +1,4 @@
 import {getOwner} from '@ember/application';
-import {computed} from '@ember/object';
 import Service from '@ember/service';
 
 declare class FastBoot {
@@ -18,7 +17,6 @@ interface Language {
 }
 
 export default class BestLanguage extends Service {
-  @computed()
   get fastboot(): FastBoot | null {
     return getOwner(this).lookup('service:fastboot');
   }
@@ -52,6 +50,7 @@ export default class BestLanguage extends Service {
   }
 
   private fetchHeaderLanguages(): Language[] {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const headers = this.fastboot!.request.headers;
 
     return this.parseHeader(headers.get('Accept-Language') || '');

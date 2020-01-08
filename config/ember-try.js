@@ -19,7 +19,7 @@ module.exports = function() {
             'ember test --filter "when running inside FastBoot" --invert',
           npm: {
             dependencies: {
-              'ember-source': '^3.4.0',
+              'ember-source': '~3.4.0',
               'ember-cli-fastboot': null
             }
           }
@@ -30,7 +30,7 @@ module.exports = function() {
             'ember test --filter "when running inside FastBoot" --invert',
           npm: {
             dependencies: {
-              'ember-source': '^3.8.0',
+              'ember-source': '~3.8.0',
               'ember-cli-fastboot': null
             }
           }
@@ -41,7 +41,7 @@ module.exports = function() {
             'ember test --filter "when running inside FastBoot" --invert',
           npm: {
             dependencies: {
-              'ember-source': '^3.12.0',
+              'ember-source': '~3.12.0',
               'ember-cli-fastboot': null
             }
           }
@@ -82,7 +82,7 @@ module.exports = function() {
           name: 'ember-lts-3.4-with-fastboot',
           npm: {
             dependencies: {
-              'ember-source': '^3.4.0'
+              'ember-source': '~3.4.0'
             }
           }
         },
@@ -90,7 +90,7 @@ module.exports = function() {
           name: 'ember-lts-3.8-with-fastboot',
           npm: {
             dependencies: {
-              'ember-source': '^3.8.0'
+              'ember-source': '~3.8.0'
             }
           }
         },
@@ -98,7 +98,7 @@ module.exports = function() {
           name: 'ember-lts-3.12-with-fastboot',
           npm: {
             dependencies: {
-              'ember-source': '^3.12.0'
+              'ember-source': '~3.12.0'
             }
           }
         },
