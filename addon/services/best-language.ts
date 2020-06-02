@@ -57,19 +57,21 @@ export default class BestLanguage extends Service {
   }
 
   private fetchBrowserLanguages(): Language[] {
-    const languages = [
+    const browserLanguages = [
       ...(navigator.languages || []),
       navigator.language,
       (navigator as any).userLanguage
     ];
 
-    return Array.from(new Set(languages))
-      .filter(language => !!language)
-      .map((language, index, array) => ({
-        language,
-        baseLanguage: this.getBaseLanguage(language),
-        score: this.computeScore(index, array.length)
-      }));
+    const languages = browserLanguages.filter((language, index, array) => {
+      return !!language && array.indexOf(language) === index;
+    });
+
+    return languages.map((language, index, array) => ({
+      language,
+      baseLanguage: this.getBaseLanguage(language),
+      score: this.computeScore(index, array.length)
+    }));
   }
 
   private parseHeader(header: string): Language[] {
