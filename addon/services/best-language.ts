@@ -1,5 +1,7 @@
 import {getOwner} from '@ember/application';
-import Service from '@ember/service';
+import Service, {inject as service} from '@ember/service';
+import type FastBootAdapter from 'ember-best-language/services/best-language/fastboot';
+import type BrowserAdapter from 'ember-best-language/services/best-language/browser';
 
 declare class FastBoot {
   isFastBoot: boolean;
@@ -17,20 +19,28 @@ interface Language {
 }
 
 export default class BestLanguage extends Service {
+  @service('best-language/fastboot')
+  fastbootAdapter: FastBootAdapter;
+
+  @service('best-language/browser')
+  browserAdapter: BrowserAdapter;
+
   get fastboot(): FastBoot | null {
-    return getOwner(this).lookup('service:fastboot');
+    return (getOwner(this) as any).lookup('service:fastboot');
   }
 
   bestLanguage(languages: string[]): Language | null {
     const userLanguages =
-      (this.fastboot && this.fastboot.isFastBoot) || false
-        ? this.fetchHeaderLanguages()
-        : this.fetchBrowserLanguages();
+      this.fastboot?.isFastBoot || false ? this.fastbootAdapter.fetchLanguages() : this.browserAdapter.fetchLanguages();
 
-    const supportedUserLanguages = this.intersectLanguages(
-      userLanguages,
-      languages
-    );
+    const userLangaguesWithBaseLanguage = userLanguages.map(userLanguage => {
+      return {
+        ...userLanguage,
+        baseLanguage: this.getBaseLanguage(userLanguage.language),
+      };
+    });
+
+    const supportedUserLanguages = this.intersectLanguages(userLangaguesWithBaseLanguage, languages);
 
     const sortedLanguages = this.sortLanguagesByScore(supportedUserLanguages);
 
@@ -45,50 +55,7 @@ export default class BestLanguage extends Service {
     return {
       baseLanguage: this.getBaseLanguage(languages[0]),
       language: languages[0],
-      score: 0
-    };
-  }
-
-  private fetchHeaderLanguages(): Language[] {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const headers = this.fastboot!.request.headers;
-
-    return this.parseHeader(headers.get('Accept-Language') || '');
-  }
-
-  private fetchBrowserLanguages(): Language[] {
-    const browserLanguages = [
-      ...(navigator.languages || []),
-      navigator.language,
-      (navigator as any).userLanguage
-    ];
-
-    const languages = browserLanguages.filter((language, index, array) => {
-      return !!language && array.indexOf(language) === index;
-    });
-
-    return languages.map((language, index, array) => ({
-      language,
-      baseLanguage: this.getBaseLanguage(language),
-      score: this.computeScore(index, array.length)
-    }));
-  }
-
-  private parseHeader(header: string): Language[] {
-    return header
-      .split(',')
-      .map(headerItem => this.parseHeaderItem(headerItem));
-  }
-
-  private parseHeaderItem(item: string): Language {
-    const [language, scoreString = 'q=1.0'] = item.split(';');
-
-    const score = parseFloat(scoreString.split('=')[1]) || 0;
-
-    return {
-      language,
-      score,
-      baseLanguage: this.getBaseLanguage(language)
+      score: 0,
     };
   }
 
@@ -96,14 +63,10 @@ export default class BestLanguage extends Service {
     return language.replace(/[\-_].+$/, '');
   }
 
-  private intersectLanguages(
-    userLanguages: Language[],
-    languages: string[]
-  ): LanguageWithMatch[] {
+  private intersectLanguages(userLanguages: Language[], languages: string[]): LanguageWithMatch[] {
     return userLanguages.reduce((memo, userLanguage) => {
       const matchesLanguage = languages.find(
-        language =>
-          language.toLowerCase() === userLanguage.language.toLowerCase()
+        language => language.toLowerCase() === userLanguage.language.toLowerCase()
       );
 
       if (matchesLanguage) {
@@ -111,10 +74,7 @@ export default class BestLanguage extends Service {
       }
 
       const matchesBaseLanguage = languages.find(language => {
-        return (
-          this.getBaseLanguage(language).toLowerCase() ===
-          userLanguage.baseLanguage.toLowerCase()
-        );
+        return this.getBaseLanguage(language).toLowerCase() === userLanguage.baseLanguage.toLowerCase();
       });
 
       if (matchesBaseLanguage) {
@@ -125,30 +85,17 @@ export default class BestLanguage extends Service {
     }, []);
   }
 
-  private sortLanguagesByScore(
-    languages: LanguageWithMatch[]
-  ): LanguageWithMatch[] {
+  private sortLanguagesByScore(languages: LanguageWithMatch[]): LanguageWithMatch[] {
     return languages.sort(({score: scoreA}, {score: scoreB}) => {
       return scoreB - scoreA;
     });
-  }
-
-  private computeScore(index: number, total: number): number {
-    const scoreDefaultDivider = 10;
-
-    const score =
-      total <= scoreDefaultDivider
-        ? 1 - index / scoreDefaultDivider
-        : 1 - index / total;
-
-    return parseFloat(score.toFixed(2));
   }
 
   private mapToLanguage(language: LanguageWithMatch): Language {
     return {
       baseLanguage: language.baseLanguage,
       language: language.matches,
-      score: language.score
+      score: language.score,
     };
   }
 }

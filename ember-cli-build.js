@@ -1,11 +1,16 @@
-/* eslint-env node */
-
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const {maybeEmbroider} = require('@embroider/test-setup');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const app = new EmberAddon(defaults);
 
-  return app.toTree();
+  return maybeEmbroider(app, {
+    skipBabel: [
+      {
+        package: 'qunit',
+      },
+    ],
+  });
 };
