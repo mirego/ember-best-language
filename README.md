@@ -38,7 +38,7 @@ export default class extends Route {
   @service('best-language') bestLanguage;
 
   beforeModel() {
-    const bestLanguage = this.bestLanguage.bestLanguage(['en', 'fr']);
+    const bestLanguage = this.bestLanguage.bestLanguage(['en-US', 'fr']);
     // => {language: 'en-US', baseLanguage: 'en', score: 1}
   }
 });
