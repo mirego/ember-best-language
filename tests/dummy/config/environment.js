@@ -1,8 +1,6 @@
-/* eslint-env node */
-
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'dummy',
     environment,
@@ -10,8 +8,8 @@ module.exports = function(environment) {
     locationType: 'auto',
     EmberENV: {
       FEATURES: {},
-      EXTEND_PROTOTYPES: false
-    }
+      EXTEND_PROTOTYPES: false,
+    },
   };
 
   ENV.APP = {};

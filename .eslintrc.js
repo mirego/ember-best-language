@@ -7,11 +7,7 @@ module.exports = {
         project: './tsconfig.json'
       },
       plugins: ['@typescript-eslint', 'ember', 'mirego'],
-      extends: [
-        'plugin:mirego/recommended',
-        'prettier',
-        'prettier/@typescript-eslint'
-      ],
+      extends: ['plugin:mirego/recommended', 'prettier'],
       files: ['app/**/*', 'addon/**/*', 'tests/**/*', 'types/**/*'],
       env: {
         es6: true,
@@ -25,13 +21,11 @@ module.exports = {
         'ember/no-on-calls-in-components': 2,
         'ember/no-duplicate-dependent-keys': 2,
         'ember/no-side-effects': 2,
-        'ember/require-super-in-init': 2,
         'ember/avoid-leaking-state-in-ember-objects': 2,
         'ember/use-brace-expansion': 2,
         '@typescript-eslint/adjacent-overload-signatures': 2,
         '@typescript-eslint/array-type': [2, {default: 'array-simple'}],
         '@typescript-eslint/await-thenable': 2,
-        '@typescript-eslint/ban-ts-ignore': 2,
         '@typescript-eslint/consistent-type-assertions': [
           2,
           {assertionStyle: 'as'}
@@ -74,11 +68,12 @@ module.exports = {
         'ember-cli-build.js',
         'index.js',
         'testem.js',
-        'config/**/*.js'
+        'config/**/*.js',
+        'tests/dummy/config/**/*.js'
       ],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2015
+        ecmaVersion: 2019
       },
       env: {
         browser: false,

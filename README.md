@@ -89,7 +89,7 @@ For more information on using ember-cli, visit <https://ember-cli.com>.
 
 ## License
 
-`ember-best-language` is © 2017-2019 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause). See the [`LICENSE.md`](https://github.com/mirego/ember-best-language/blob/master/LICENSE.md) file.
+`ember-best-language` is © 2017-2022 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause). See the [`LICENSE.md`](https://github.com/mirego/ember-best-language/blob/master/LICENSE.md) file.
 
 The flag logo is based on [this lovely icon by Prasanta Kr Dutta](https://thenounproject.com/term/language/1824073), from The Noun Project. Used under a [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/) license.
 
